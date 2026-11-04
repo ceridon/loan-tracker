@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B3A2A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cer Idon Tracker">
+<title>Cer Idon Loan Tracker</title>
+<style>
+:root{
+  --ink:#1B3A2A; --grn:#2F9E5B; --grn2:#E6F4EC; --yel:#F6C344; --cor:#E4604E;
+  --bg:#F4F1E8; --card:#FFFFFF; --txt:#1B2A22; --mut:#5E6E64; --line:#E2DDCF; --inp:#FAF8F2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1A14; --card:#18261E; --txt:#E9EFE9; --mut:#9DB0A3; --line:#2A3B31; --inp:#122019; --grn2:#1C3527;
+  }
+}
+:root[data-theme="dark"]{--bg:#0F1A14;--card:#18261E;--txt:#E9EFE9;--mut:#9DB0A3;--line:#2A3B31;--inp:#122019;--grn2:#1C3527}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{background:var(--ink);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 18px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--yel);display:grid;place-items:center;color:var(--ink);flex:none}
+.brand h1{font-size:18px;line-height:1.1}
+.brand small{display:block;font-size:12px;opacity:.75;font-weight:500;letter-spacing:.04em}
+main{padding:14px 16px;max-width:560px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--inp);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:14px}
+.seg button{border:0;background:none;padding:10px;border-radius:9px;font:600 14px inherit;color:var(--mut)}
+.seg button.on{background:var(--grn);color:#fff}
+label{display:block;font-size:13px;color:var(--mut);font-weight:600;margin:10px 0 5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{position:relative}
+.field span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-weight:600;pointer-events:none}
+.field span.r{left:auto;right:12px}
+input,select{width:100%;padding:13px 12px;border:1px solid var(--line);border-radius:11px;background:var(--inp);color:var(--txt);font:600 16px inherit;outline:none;appearance:none}
+input:focus,select:focus{border-color:var(--grn)}
+.field.pre input{padding-left:28px}.field.suf input{padding-right:40px}
+.hint{font-size:12px;color:var(--mut);margin-top:6px}
+.hero{background:var(--ink);color:#fff;border:0}
+.hero .lbl{font-size:13px;opacity:.8}
+.hero .big{font-size:38px;font-weight:800;letter-spacing:-.02em;margin:4px 0 12px;font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:16px;font-variant-numeric:tabular-nums}
+.stat small{font-size:12px;opacity:.75}
+.bar{height:10px;border-radius:6px;overflow:hidden;display:flex;margin-top:14px;background:rgba(255,255,255,.1)}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:14px;font-size:12px;margin-top:8px;opacity:.85}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;background:var(--c)}
+.save{background:var(--grn2);border:1px solid var(--grn)}
+.save .bigwin{font-size:30px;font-weight:800;color:var(--grn);font-variant-numeric:tabular-nums}
+.cmp{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;font-variant-numeric:tabular-nums}
+.cmp th,.cmp td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right}
+.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--mut);font-weight:600}
+.cmp thead th{font-size:12px;color:var(--mut)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:14px;font:700 15px inherit;background:var(--grn);color:#fff;margin-top:12px;text-decoration:none}
+.btn.alt{background:var(--inp);color:var(--txt);border:1px solid var(--line)}
+.btn.yel{background:var(--yel);color:var(--ink)}
+.sched{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.sched th{position:sticky;top:0;background:var(--card);font-size:11px;color:var(--mut);text-align:right;padding:8px 4px;border-bottom:1px solid var(--line)}
+.sched td{text-align:right;padding:9px 4px;border-bottom:1px solid var(--line)}
+.sched th:first-child,.sched td:first-child{text-align:left}
+.sched tr.paid td{color:var(--mut);background:var(--grn2)}
+.sched tr.yr td{font-weight:700;background:var(--inp);color:var(--txt)}
+.chk{width:22px;height:22px;accent-color:var(--grn);vertical-align:middle}
+.prog{height:14px;background:var(--inp);border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:10px 0 6px}
+.prog i{display:block;height:100%;background:var(--grn);width:0;transition:width .3s}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav button{border:0;background:none;padding:9px 2px 10px;font:600 11px inherit;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{width:23px;height:23px}
+nav button.on{color:var(--grn)}
+.page{display:none}.page.on{display:block}
+.contact{display:grid;gap:10px}
+.disc{font-size:12px;color:var(--mut);line-height:1.5}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--yel);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9;max-width:90%;text-align:center}
+.toast.on{opacity:1}
+.empty{color:var(--mut);font-size:14px;text-align:center;padding:20px 0}
+p.note{font-size:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+    <div><h1>Cer Idon Loan Tracker</h1><small>HOME LOAN CALCULATOR · PAG-IBIG &amp; BANK</small></div>
+  </div>
+</header>
+
+<main>
+<div class="card" id="webOnly" style="display:none;background:var(--yel);border:0;color:#1B3A2A">
+  <div style="font-weight:800;font-size:15px">📱 Get the app</div>
+  <div style="font-size:13px;margin-top:4px;line-height:1.45" id="webOnlyTxt"></div>
+  <a class="btn" id="apkBtn" href="CerIdon-Loan-Tracker.apk" download style="background:#1B3A2A">Download for Android (APK)</a>
+</div>
+<!-- ============ COMPUTE ============ -->
+<section class="page on" id="p-calc">
+  <div class="card">
+    <div class="seg" id="lender"><button data-v="pagibig" class="on">Pag-IBIG</button><button data-v="bank">Bank</button></div>
+    <label>House price (TCP)</label>
+    <div class="field pre"><span>₱</span><input id="price" inputmode="numeric" value="2,500,000"></div>
+    <div class="row">
+      <div><label>Downpayment</label><div class="field suf"><input id="dp" inputmode="decimal" value="10"><span class="r">%</span></div></div>
+      <div><label>Interest rate / year</label><div class="field suf"><input id="rate" inputmode="decimal" value="6.25"><span class="r">%</span></div></div>
+    </div>
+    <label>Loan term</label>
+    <select id="term"></select>
+    <div class="hint" id="loanHint"></div>
+  </div>
+
+  <div class="card hero">
+    <div class="lbl">Monthly amortization (principal + interest)</div>
+    <div class="big" id="mo">₱0</div>
+    <div class="stats">
+      <div class="stat"><small>Loan amount</small><b id="sLoan">–</b></div>
+      <div class="stat"><small>Total interest</small><b id="sInt">–</b></div>
+      <div class="stat"><small>Total payments</small><b id="sTot">–</b></div>
+      <div class="stat"><small>Total incl. downpayment</small><b id="sAll">–</b></div>
+    </div>
+    <div class="bar"><i id="bP" style="background:#2F9E5B"></i><i id="bI" style="background:#F6C344"></i></div>
+    <div class="legend"><span style="--c:#2F9E5B">Principal</span><span style="--c:#F6C344">Interest</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Can your budget handle it?</h2>
+    <label>Monthly household income</label>
+    <div class="field pre"><span>₱</span><input id="income" inputmode="numeric" placeholder="e.g. 60,000"></div>
+    <div class="hint" id="incomeHint">Rule of thumb: keep the monthly payment under ~35% of income.</div>
+  </div>
+  <p class="disc">Estimates only. Actual rates, fees, insurance and approval depend on Pag-IBIG or your bank. Rates may change.</p>
+</section>
+
+<!-- ============ PRINCIPAL ============ -->
+<section class="page" id="p-extra">
+  <div class="card">
+    <h2><span class="pill">APPLIED TO PRINCIPAL</span></h2>
+    <p class="note">When extra payments go directly to the principal, your balance drops faster, so you pay less interest in the months that follow.</p>
+    <label>Extra payment every month</label>
+    <div class="field pre"><span>₱</span><input id="xMonthly" inputmode="numeric" placeholder="0"></div>
+    <label>Extra payment every year (e.g. 13th month pay)</label>
+    <div class="row">
+      <div class="field pre"><span>₱</span><input id="xYearly" inputmode="numeric" placeholder="0"></div>
+      <select id="xYearMonth"></select>
+    </div>
+    <label>One-time lump sum</label>
+    <div class="row">
+      <div class="field pre"><span>₱</span><input id="xOnce" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><input id="xOnceAt" inputmode="numeric" placeholder="at month #"></div>
+    </div>
+    <div class="hint">Check with your lender first for any prepayment penalty or minimum amount.</div>
+  </div>
+
+  <div class="card save" id="saveCard">
+    <div style="font-size:13px;color:var(--mut);font-weight:600">Interest you save</div>
+    <div class="bigwin" id="xSaved">₱0</div>
+    <div style="font-weight:700;margin-top:2px" id="xFaster">Enter an extra payment above</div>
+    <table class="cmp">
+      <thead><tr><th></th><th>Regular</th><th>With extra</th></tr></thead>
+      <tbody>
+        <tr><td>Paid off in</td><td id="cT1">–</td><td id="cT2">–</td></tr>
+        <tr><td>Total interest</td><td id="cI1">–</td><td id="cI2">–</td></tr>
+        <tr><td>Total paid</td><td id="cP1">–</td><td id="cP2">–</td></tr>
+      </tbody>
+    </table>
+    <button class="btn" id="shareBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/></svg>Share result</button>
+  </div>
+</section>
+
+<!-- ============ TRACKER ============ -->
+<section class="page" id="p-track">
+  <div class="card">
+    <h2>Payment tracker</h2>
+    <div class="row">
+      <div><label>First payment (month)</label><select id="stM"></select></div>
+      <div><label>Year</label><input id="stY" inputmode="numeric"></div>
+    </div>
+    <div class="prog"><i id="progBar"></i></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--mut)"><span id="progTxt">0 months paid</span><span id="progBal"></span></div>
+    <button class="btn alt" id="markUpTo">Mark all paid up to this month</button>
+  </div>
+  <div class="card" style="padding:8px 10px">
+    <table class="sched"><thead><tr><th>#</th><th>Principal</th><th>Interest</th><th>Balance</th><th>✓</th></tr></thead><tbody id="schedBody"></tbody></table>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="p-about">
+  <div class="card hero">
+    <div class="lbl">Made by</div>
+    <div class="big" style="font-size:30px;margin-bottom:4px">Cer Idon</div>
+    <div style="opacity:.8;font-size:14px">Real Estate · Bulacan</div>
+    <div style="font-size:20px;font-weight:700;margin-top:12px;letter-spacing:.02em">0976 150 1542</div>
+  </div>
+  <div class="card">
+    <h2>Need help with computations or finding a home?</h2>
+    <div class="contact">
+      <a class="btn" href="tel:09761501542">Call</a>
+      <a class="btn alt" href="viber://chat?number=%2B639761501542">Viber</a>
+      <a class="btn alt" href="https://wa.me/639761501542">WhatsApp</a>
+      <button class="btn yel" id="shareApp">Share this app with a friend</button>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Settings</h2>
+    <div class="seg" id="themeSeg" style="grid-template-columns:repeat(3,1fr)"><button data-v="auto" class="on">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div>
+    <button class="btn alt" id="resetBtn">Reset everything</button>
+  </div>
+  <p class="disc">All figures are estimates only and not financial advice. Your data is saved only on this phone and is never sent anywhere.</p>
+</section>
+</main>
+
+<nav id="nav">
+  <button data-p="calc" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Compute</button>
+  <button data-p="extra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Principal</button>
+  <button data-p="track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2 2 4-4"/></svg>Tracker</button>
+  <button data-p="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Cer Idon</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const KEY = "ceridon-tracker-v1";
+const PRESET = {pagibig:{rate:6.25, term:30, max:30}, bank:{rate:7.5, term:20, max:25}};
+const S = load();
+
+function load(){
+  const d = {lender:"pagibig", price:2500000, dp:10, rate:6.25, term:30, income:"", xMonthly:"", xYearly:"", xYearMonth:11, xOnce:"", xOnceAt:"", stM:new Date().getMonth(), stY:new Date().getFullYear(), paid:{}, theme:"auto"};
+  try{ return Object.assign(d, JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ return d; }
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+const num = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g,"")); return isFinite(n) ? n : 0; };
+const peso = v => "₱" + Math.round(v).toLocaleString("en-PH");
+const yrsMo = m => { const y = Math.floor(m/12), r = m%12; return (y? y+(y>1?" years":" year"):"") + (y&&r?" ":"") + (r? r+(r>1?" months":" month"):"") || "0"; };
+function fmtInput(el){ const n = num(el.value); el.value = n ? Math.round(n).toLocaleString("en-PH") : ""; }
+
+/* ---------- math ---------- */
+function payment(P, annual, months){
+  const r = annual/100/12;
+  if(!r) return P/months;
+  return P*r/(1-Math.pow(1+r,-months));
+}
+function schedule(P, annual, months, ex){
+  const r = annual/100/12, M = payment(P, annual, months);
+  let bal = P, rows = [], tInt = 0, tPay = 0;
+  for(let k=1; k<=months && bal>0.005; k++){
+    const int = bal*r;
+    let prin = Math.min(M - int, bal);
+    let extra = 0;
+    if(ex){
+      extra += ex.monthly;
+      if(ex.yearly && ((S.stM + k - 1) % 12) === ex.yearMonth) extra += ex.yearly;
+      if(ex.once && k === ex.onceAt) extra += ex.once;
+      extra = Math.min(extra, bal - prin);
+    }
+    bal -= prin + extra; if(bal < 0.005) bal = 0;
+    tInt += int; tPay += int + prin + extra;
+    rows.push({k, int, prin: prin+extra, extra, bal});
+  }
+  return {M, rows, tInt, tPay, months: rows.length};
+}
+
+/* ---------- state from UI ---------- */
+function inputs(){
+  const price = num($("price").value), dp = Math.min(num($("dp").value), 100);
+  const loan = price*(1-dp/100);
+  return {price, dp, loan, rate: num($("rate").value), months: (+$("term").value)*12};
+}
+function extras(){
+  return {monthly: num($("xMonthly").value), yearly: num($("xYearly").value), yearMonth: +$("xYearMonth").value,
+          once: num($("xOnce").value), onceAt: Math.max(1, Math.round(num($("xOnceAt").value)) || 1)};
+}
+const hasExtra = e => e.monthly>0 || e.yearly>0 || e.once>0;
+
+/* ---------- render ---------- */
+let last = null;
+function render(){
+  const I = inputs(), E = extras();
+  S.price = I.price; S.dp = num($("dp").value); S.rate = I.rate; S.term = +$("term").value;
+  S.income = $("income").value; S.xMonthly = $("xMonthly").value; S.xYearly = $("xYearly").value; S.xYearMonth = E.yearMonth;
+  S.xOnce = $("xOnce").value; S.xOnceAt = $("xOnceAt").value; S.stM = +$("stM").value; S.stY = num($("stY").value) || S.stY;
+  save();
+
+  if(I.loan <= 0 || I.months <= 0){ $("mo").textContent = "₱0"; return; }
+  const base = schedule(I.loan, I.rate, I.months, null);
+  const fast = hasExtra(E) ? schedule(I.loan, I.rate, I.months, E) : base;
+  last = {I, E, base, fast};
+
+  $("mo").textContent = peso(base.M);
+  $("sLoan").textContent = peso(I.loan);
+  $("sInt").textContent = peso(base.tInt);
+  $("sTot").textContent = peso(base.tPay);
+  $("sAll").textContent = peso(base.tPay + I.price - I.loan);
+  const pPct = I.loan/base.tPay*100;
+  $("bP").style.width = pPct+"%"; $("bI").style.width = (100-pPct)+"%";
+  $("loanHint").textContent = `Loan: ${peso(I.loan)} · ${I.months} monthly payments`;
+
+  const inc = num($("income").value);
+  if(inc){
+    const pct = base.M/inc*100;
+    $("incomeHint").innerHTML = `The payment is <b>${pct.toFixed(0)}%</b> of income. ` + (pct<=35 ? "✅ Within the usual guideline." : "⚠️ A bit heavy. Try a longer term or a bigger downpayment.");
+  } else $("incomeHint").textContent = "Rule of thumb: keep the monthly payment under ~35% of income.";
+
+  // principal page
+  const saved = base.tInt - fast.tInt, fewer = base.months - fast.months;
+  $("xSaved").textContent = peso(Math.max(0,saved));
+  $("xFaster").textContent = hasExtra(E) ? (fewer>0 ? `You finish ${yrsMo(fewer)} earlier!` : "Small effect so far. Try a bigger amount.") : "Enter an extra payment above";
+  $("cT1").textContent = yrsMo(base.months); $("cT2").textContent = yrsMo(fast.months);
+  $("cI1").textContent = peso(base.tInt); $("cI2").textContent = peso(fast.tInt);
+  $("cP1").textContent = peso(base.tPay); $("cP2").textContent = peso(fast.tPay);
+
+  renderSchedule(fast);
+}
+
+function renderSchedule(sc){
+  const body = $("schedBody"); let html = "";
+  sc.rows.forEach(r=>{
+    const m = (S.stM + r.k - 1), y = S.stY + Math.floor(m/12), mo = m % 12;
+    if(r.k===1 || mo===0) html += `<tr class="yr"><td colspan="5">${y}</td></tr>`;
+    const p = S.paid[r.k];
+    html += `<tr class="${p?'paid':''}"><td>${MONTHS[mo]} <span style="color:var(--mut);font-size:11px">#${r.k}</span></td><td>${Math.round(r.prin).toLocaleString("en-PH")}${r.extra?'<span style="color:var(--grn)">*</span>':''}</td><td>${Math.round(r.int).toLocaleString("en-PH")}</td><td>${Math.round(r.bal).toLocaleString("en-PH")}</td><td><input type="checkbox" class="chk" data-k="${r.k}" ${p?'checked':''}></td></tr>`;
+  });
+  body.innerHTML = html || '<tr><td colspan="5" class="empty">Enter your loan details in Compute first.</td></tr>';
+  updProgress(sc);
+}
+function updProgress(sc){
+  let n = 0, bal = sc.rows.length ? last.I.loan : 0;
+  sc.rows.forEach(r=>{ if(S.paid[r.k]){ n++; } });
+  let lastPaid = 0; sc.rows.forEach(r=>{ if(S.paid[r.k]) lastPaid = r.k; });
+  if(lastPaid) bal = sc.rows[lastPaid-1].bal;
+  $("progBar").style.width = (sc.rows.length ? n/sc.rows.length*100 : 0) + "%";
+  $("progTxt").textContent = `${n} / ${sc.rows.length} months paid`;
+  $("progBal").textContent = sc.rows.length ? "Balance: " + peso(bal) : "";
+}
+
+/* ---------- setup ---------- */
+function fillTerms(){
+  const max = PRESET[S.lender].max, sel = $("term"); sel.innerHTML = "";
+  for(let y=1; y<=max; y++){ const o = document.createElement("option"); o.value = y; o.textContent = y + (y===1?" year":" years"); sel.appendChild(o); }
+  sel.value = Math.min(S.term, max);
+}
+MONTHS.forEach((m,i)=>{ ["xYearMonth","stM"].forEach(id=>{ const o=document.createElement("option"); o.value=i; o.textContent = id==="xYearMonth" ? "every "+m : m; $(id).appendChild(o); }); });
+
+function setLender(v, applyPreset){
+  S.lender = v;
+  document.querySelectorAll("#lender button").forEach(b=>b.classList.toggle("on", b.dataset.v===v));
+  if(applyPreset){ $("rate").value = PRESET[v].rate; S.term = PRESET[v].term; }
+  fillTerms();
+}
+setLender(S.lender, false);
+$("price").value = S.price ? Math.round(S.price).toLocaleString("en-PH") : "";
+$("dp").value = S.dp; $("rate").value = S.rate; $("term").value = Math.min(S.term, PRESET[S.lender].max);
+$("income").value = S.income; $("xMonthly").value = S.xMonthly; $("xYearly").value = S.xYearly; $("xYearMonth").value = S.xYearMonth;
+$("xOnce").value = S.xOnce; $("xOnceAt").value = S.xOnceAt; $("stM").value = S.stM; $("stY").value = S.stY;
+
+document.querySelectorAll("#lender button").forEach(b=>b.onclick=()=>{ setLender(b.dataset.v, true); render(); });
+["price","dp","rate","income","xMonthly","xYearly","xOnce","xOnceAt","stY"].forEach(id=>$(id).addEventListener("input", render));
+["price","income","xMonthly","xYearly","xOnce"].forEach(id=>$(id).addEventListener("blur", ()=>fmtInput($(id))));
+["term","xYearMonth","stM"].forEach(id=>$(id).addEventListener("change", render));
+
+$("schedBody").addEventListener("change", e=>{
+  const k = e.target.dataset && e.target.dataset.k; if(!k) return;
+  if(e.target.checked) S.paid[k] = 1; else delete S.paid[k];
+  e.target.closest("tr").classList.toggle("paid", e.target.checked);
+  save(); updProgress(last.fast);
+});
+$("markUpTo").onclick = ()=>{
+  const now = new Date(), diff = (now.getFullYear()-S.stY)*12 + now.getMonth() - S.stM + 1;
+  if(diff < 1){ toast("Payments haven't started yet."); return; }
+  S.paid = {}; for(let k=1; k<=Math.min(diff, last.fast.rows.length); k++) S.paid[k]=1;
+  save(); renderSchedule(last.fast); toast(`${Math.min(diff,last.fast.rows.length)} months marked paid`);
+};
+
+/* nav */
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on", x===b));
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on", p.id==="p-"+b.dataset.p));
+  window.scrollTo(0,0);
+});
+
+/* theme */
+function setTheme(t){ S.theme = t; if(t==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  document.querySelectorAll("#themeSeg button").forEach(b=>b.classList.toggle("on", b.dataset.v===t)); save(); }
+document.querySelectorAll("#themeSeg button").forEach(b=>b.onclick=()=>setTheme(b.dataset.v));
+setTheme(S.theme);
+$("resetBtn").onclick = ()=>{ try{ localStorage.removeItem(KEY); }catch(e){} location.reload(); };
+
+/* share */
+function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("on"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("on"),2200); }
+async function share(text){
+  const cap = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Share;
+  try{
+    if(cap){ await cap.share({title:"Cer Idon Loan Tracker", text}); return; }
+    if(navigator.share){ await navigator.share({title:"Cer Idon Loan Tracker", text}); return; }
+  }catch(e){ if(e && e.name==="AbortError") return; }
+  try{ await navigator.clipboard.writeText(text); toast("Copied! Paste it in a chat."); }
+  catch(e){ toast("Can't share here. Take a screenshot instead."); }
+}
+$("shareBtn").onclick = ()=>{
+  if(!last) return;
+  const {I, base, fast} = last;
+  const t = hasExtra(last.E)
+    ? `${peso(I.loan)} loan at ${I.rate}%:\nRegular: ${yrsMo(base.months)}, interest ${peso(base.tInt)}\nWith extra principal payments: ${yrsMo(fast.months)}, interest ${peso(fast.tInt)}\nSaved: ${peso(base.tInt-fast.tInt)} 🏠\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment CALCU to get it too.`
+    : `${peso(I.loan)} loan at ${I.rate}% for ${I.months/12} years = ${peso(base.M)} per month.\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment CALCU to get it too.`;
+  share(t);
+};
+$("shareApp").onclick = ()=>share("Cer Idon has a free home loan calculator and tracker for Pag-IBIG and bank loans. Follow Cer Idon on Facebook and comment CALCU to get it. 🏠");
+
+/* web-only install banner (hidden inside the Android app) */
+if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())){
+  const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  $("webOnly").style.display = "block";
+  if(ios){
+    $("apkBtn").style.display = "none";
+    $("webOnlyTxt").innerHTML = "On iPhone: tap the <b>Share</b> button in Safari, then <b>Add to Home Screen</b>. It will work like an app.";
+  } else {
+    $("webOnlyTxt").innerHTML = "Android: download the app below. If asked, allow <b>Install unknown apps</b>. On iPhone, just use this page and tap <b>Share → Add to Home Screen</b>.";
+  }
+}
+
+render();
+})();
+</script>
+</body>
+</html>
