@@ -22,14 +22,17 @@
 html,body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px}
 body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 header{background:var(--ink);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 18px}
-.brand{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;max-width:560px;margin:0 auto}
 .logo{width:38px;height:38px;border-radius:10px;background:var(--yel);display:grid;place-items:center;color:var(--ink);flex:none}
 .brand h1{font-size:18px;line-height:1.1}
 .brand small{display:block;font-size:12px;opacity:.75;font-weight:500;letter-spacing:.04em}
 main{padding:14px 16px;max-width:560px;margin:0 auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
-.card h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--inp);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:14px}
+.step{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.num{width:28px;height:28px;border-radius:50%;background:var(--grn);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+.step h2{font-size:17px}
+.sub{font-size:13px;color:var(--mut);margin:0 0 6px 38px;line-height:1.4}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--inp);border:1px solid var(--line);border-radius:12px;padding:4px;margin:10px 0 4px}
 .seg button{border:0;background:none;padding:10px;border-radius:9px;font:600 14px inherit;color:var(--mut)}
 .seg button.on{background:var(--grn);color:#fff}
 label{display:block;font-size:13px;color:var(--mut);font-weight:600;margin:10px 0 5px}
@@ -37,28 +40,32 @@ label{display:block;font-size:13px;color:var(--mut);font-weight:600;margin:10px 
 .field{position:relative}
 .field span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-weight:600;pointer-events:none}
 .field span.r{left:auto;right:12px}
-input,select{width:100%;padding:13px 12px;border:1px solid var(--line);border-radius:11px;background:var(--inp);color:var(--txt);font:600 16px inherit;outline:none;appearance:none}
+input,select{width:100%;padding:13px 12px;border:1px solid var(--line);border-radius:11px;background:var(--inp);color:var(--txt);font:600 16px inherit;outline:none;appearance:none;-webkit-appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:30px}
 input:focus,select:focus{border-color:var(--grn)}
 .field.pre input{padding-left:28px}.field.suf input{padding-right:40px}
-.hint{font-size:12px;color:var(--mut);margin-top:6px}
-.hero{background:var(--ink);color:#fff;border:0}
-.hero .lbl{font-size:13px;opacity:.8}
-.hero .big{font-size:38px;font-weight:800;letter-spacing:-.02em;margin:4px 0 12px;font-variant-numeric:tabular-nums}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 12px}
-.stat b{display:block;font-size:16px;font-variant-numeric:tabular-nums}
-.stat small{font-size:12px;opacity:.75}
-.bar{height:10px;border-radius:6px;overflow:hidden;display:flex;margin-top:14px;background:rgba(255,255,255,.1)}
-.bar i{display:block;height:100%}
-.legend{display:flex;gap:14px;font-size:12px;margin-top:8px;opacity:.85}
-.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;background:var(--c)}
-.save{background:var(--grn2);border:1px solid var(--grn)}
-.save .bigwin{font-size:30px;font-weight:800;color:var(--grn);font-variant-numeric:tabular-nums}
-.cmp{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;font-variant-numeric:tabular-nums}
-.cmp th,.cmp td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right}
-.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--mut);font-weight:600}
-.cmp thead th{font-size:12px;color:var(--mut)}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:14px;font:700 15px inherit;background:var(--grn);color:#fff;margin-top:12px;text-decoration:none}
+.monthly{display:flex;justify-content:space-between;align-items:baseline;background:var(--grn2);border-radius:12px;padding:12px 14px;margin-top:14px}
+.monthly small{color:var(--mut);font-weight:600;font-size:13px}
+.monthly b{font-size:24px;font-variant-numeric:tabular-nums}
+.split{font-size:13px;color:var(--mut);margin-top:8px;line-height:1.45}
+.split b{color:var(--txt)}
+details.help{margin-top:10px;border:1px dashed var(--line);border-radius:11px;padding:10px 12px;font-size:13px;line-height:1.5;color:var(--mut)}
+details.help summary{cursor:pointer;font-weight:700;color:var(--grn);list-style:none}
+details.help summary::-webkit-details-marker{display:none}
+details.help p{margin-top:6px}
+.result{background:var(--ink);color:#fff;border:0}
+.result .step h2{color:#fff}
+.result .num{background:var(--yel);color:var(--ink)}
+.win{display:flex;gap:12px;align-items:flex-start;margin-top:14px}
+.win .ic{font-size:26px;line-height:1}
+.win small{display:block;font-size:13px;opacity:.75}
+.win b{display:block;font-size:26px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}
+.cmp{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px;font-variant-numeric:tabular-nums}
+.cmp th,.cmp td{padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.12);text-align:right}
+.cmp th:first-child,.cmp td:first-child{text-align:left;opacity:.75;font-weight:600}
+.cmp thead th{font-size:12px;opacity:.7}
+.cmp td.hi{color:var(--yel);font-weight:700}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;padding:14px;font:700 15px inherit;background:var(--grn);color:#fff;margin-top:12px;text-decoration:none;cursor:pointer}
 .btn.alt{background:var(--inp);color:var(--txt);border:1px solid var(--line)}
 .btn.yel{background:var(--yel);color:var(--ink)}
 .sched{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
@@ -70,18 +77,17 @@ input:focus,select:focus{border-color:var(--grn)}
 .chk{width:22px;height:22px;accent-color:var(--grn);vertical-align:middle}
 .prog{height:14px;background:var(--inp);border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:10px 0 6px}
 .prog i{display:block;height:100%;background:var(--grn);width:0;transition:width .3s}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
-nav button{border:0;background:none;padding:9px 2px 10px;font:600 11px inherit;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav button{border:0;background:none;padding:9px 2px 10px;font:600 12px inherit;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
 nav button svg{width:23px;height:23px}
 nav button.on{color:var(--grn)}
 .page{display:none}.page.on{display:block}
 .contact{display:grid;gap:10px}
-.disc{font-size:12px;color:var(--mut);line-height:1.5}
-.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--yel);color:var(--ink)}
+.disc{font-size:12px;color:var(--mut);line-height:1.5;margin-bottom:10px}
 .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9;max-width:90%;text-align:center}
 .toast.on{opacity:1}
 .empty{color:var(--mut);font-size:14px;text-align:center;padding:20px 0}
-p.note{font-size:14px;line-height:1.5}
+.hidden{display:none}
 </style>
 </head>
 <body>
@@ -98,85 +104,81 @@ p.note{font-size:14px;line-height:1.5}
   <div style="font-size:13px;margin-top:4px;line-height:1.45" id="webOnlyTxt"></div>
   <a class="btn" id="apkBtn" href="CerIdon-Loan-Tracker.apk" download style="background:#1B3A2A">Download for Android (APK)</a>
 </div>
-<!-- ============ COMPUTE ============ -->
+
+<!-- ============ CALCULATOR ============ -->
 <section class="page on" id="p-calc">
+  <!-- STEP 1 -->
   <div class="card">
+    <div class="step"><div class="num">1</div><h2>Your loan</h2></div>
     <div class="seg" id="lender"><button data-v="pagibig" class="on">Pag-IBIG</button><button data-v="bank">Bank</button></div>
-    <label>House price (TCP)</label>
-    <div class="field pre"><span>₱</span><input id="price" inputmode="numeric" value="2,500,000"></div>
+    <label>House price</label>
+    <div class="field pre"><span>₱</span><input id="price" inputmode="numeric"></div>
     <div class="row">
-      <div><label>Downpayment</label><div class="field suf"><input id="dp" inputmode="decimal" value="10"><span class="r">%</span></div></div>
-      <div><label>Interest rate / year</label><div class="field suf"><input id="rate" inputmode="decimal" value="6.25"><span class="r">%</span></div></div>
+      <div><label>Downpayment</label><div class="field suf"><input id="dp" inputmode="decimal"><span class="r">%</span></div></div>
+      <div><label>Years to pay</label><select id="term"></select></div>
     </div>
-    <label>Loan term</label>
-    <select id="term"></select>
-    <div class="hint" id="loanHint"></div>
+    <label>Interest rate per year</label>
+    <div class="field suf"><input id="rate" inputmode="decimal"><span class="r">%</span></div>
+
+    <div class="monthly"><small>Your monthly</small><b id="mo">₱0</b></div>
+    <div class="split" id="split"></div>
+    <details class="help">
+      <summary>? What are principal and interest</summary>
+      <p><b>Principal</b> = the money you actually borrowed (your debt).<br><b>Interest</b> = the extra you pay the lender for borrowing.</p>
+      <p>At the start of a loan, most of your monthly goes to interest. That is why paying extra on the principal saves you so much.</p>
+    </details>
   </div>
 
-  <div class="card hero">
-    <div class="lbl">Monthly amortization (principal + interest)</div>
-    <div class="big" id="mo">₱0</div>
-    <div class="stats">
-      <div class="stat"><small>Loan amount</small><b id="sLoan">–</b></div>
-      <div class="stat"><small>Total interest</small><b id="sInt">–</b></div>
-      <div class="stat"><small>Total payments</small><b id="sTot">–</b></div>
-      <div class="stat"><small>Total incl. downpayment</small><b id="sAll">–</b></div>
-    </div>
-    <div class="bar"><i id="bP" style="background:#2F9E5B"></i><i id="bI" style="background:#F6C344"></i></div>
-    <div class="legend"><span style="--c:#2F9E5B">Principal</span><span style="--c:#F6C344">Interest</span></div>
-  </div>
-
+  <!-- STEP 2 -->
   <div class="card">
-    <h2>Can your budget handle it?</h2>
-    <label>Monthly household income</label>
-    <div class="field pre"><span>₱</span><input id="income" inputmode="numeric" placeholder="e.g. 60,000"></div>
-    <div class="hint" id="incomeHint">Rule of thumb: keep the monthly payment under ~35% of income.</div>
-  </div>
-  <p class="disc">Estimates only. Actual rates, fees, insurance and approval depend on Pag-IBIG or your bank. Rates may change.</p>
-</section>
-
-<!-- ============ PRINCIPAL ============ -->
-<section class="page" id="p-extra">
-  <div class="card">
-    <h2><span class="pill">APPLIED TO PRINCIPAL</span></h2>
-    <p class="note">When extra payments go directly to the principal, your balance drops faster, so you pay less interest in the months that follow.</p>
-    <label>Extra payment every month</label>
-    <div class="field pre"><span>₱</span><input id="xMonthly" inputmode="numeric" placeholder="0"></div>
-    <label>Extra payment every year (e.g. 13th month pay)</label>
+    <div class="step"><div class="num">2</div><h2>Extra payment</h2></div>
+    <p class="sub">Any extra money you pay straight to the principal, like your 13th month pay.</p>
     <div class="row">
-      <div class="field pre"><span>₱</span><input id="xYearly" inputmode="numeric" placeholder="0"></div>
-      <select id="xYearMonth"></select>
+      <div class="field pre"><span>₱</span><input id="xAmt" inputmode="numeric" placeholder="0"></div>
+      <select id="xFreq">
+        <option value="year">Every year</option>
+        <option value="once">One time only</option>
+        <option value="month">Every month</option>
+      </select>
     </div>
-    <label>One-time lump sum</label>
-    <div class="row">
-      <div class="field pre"><span>₱</span><input id="xOnce" inputmode="numeric" placeholder="0"></div>
-      <div class="field"><input id="xOnceAt" inputmode="numeric" placeholder="at month #"></div>
+    <div class="row" id="xWhenRow">
+      <div><label id="xWhenLbl">Paid every</label><select id="xMonth"></select></div>
+      <div id="xYearBox" class="hidden"><label>In year #</label><input id="xYear" inputmode="numeric" placeholder="1"></div>
     </div>
-    <div class="hint">Check with your lender first for any prepayment penalty or minimum amount.</div>
+    <details class="help">
+      <summary>? Before you pay extra</summary>
+      <p>Tell the lender clearly it is <b>"applied to principal"</b>. If not, it may be counted only as an advance for your next monthly. For Pag-IBIG, you usually have to do this at their branch. Ask about any penalty, especially for bank loans.</p>
+    </details>
   </div>
 
-  <div class="card save" id="saveCard">
-    <div style="font-size:13px;color:var(--mut);font-weight:600">Interest you save</div>
-    <div class="bigwin" id="xSaved">₱0</div>
-    <div style="font-weight:700;margin-top:2px" id="xFaster">Enter an extra payment above</div>
+  <!-- STEP 3 -->
+  <div class="card result">
+    <div class="step"><div class="num">3</div><h2>Your result</h2></div>
+    <div id="resNone" class="sub" style="color:#fff;opacity:.8;margin-left:38px">Put an extra payment in step 2 to see how much you save.</div>
+    <div id="resYes">
+      <div class="win"><div class="ic">✅</div><div><small>You finish earlier by</small><b id="rFaster">–</b></div></div>
+      <div class="win"><div class="ic">💰</div><div><small>You save in interest</small><b id="rSaved">–</b></div></div>
+    </div>
     <table class="cmp">
-      <thead><tr><th></th><th>Regular</th><th>With extra</th></tr></thead>
+      <thead><tr><th></th><th>No extra</th><th>With extra</th></tr></thead>
       <tbody>
-        <tr><td>Paid off in</td><td id="cT1">–</td><td id="cT2">–</td></tr>
-        <tr><td>Total interest</td><td id="cI1">–</td><td id="cI2">–</td></tr>
-        <tr><td>Total paid</td><td id="cP1">–</td><td id="cP2">–</td></tr>
+        <tr><td>Fully paid in</td><td id="cT1">–</td><td id="cT2" class="hi">–</td></tr>
+        <tr><td>Total interest</td><td id="cI1">–</td><td id="cI2" class="hi">–</td></tr>
+        <tr><td>Total you pay</td><td id="cP1">–</td><td id="cP2" class="hi">–</td></tr>
       </tbody>
     </table>
-    <button class="btn" id="shareBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/></svg>Share result</button>
+    <button class="btn yel" id="shareBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/></svg>Share my result</button>
   </div>
+  <p class="disc">Estimates only. Actual rates, fees, insurance and approval depend on Pag-IBIG or your bank. Rates may change.</p>
 </section>
 
 <!-- ============ TRACKER ============ -->
 <section class="page" id="p-track">
   <div class="card">
-    <h2>Payment tracker</h2>
+    <div class="step"><div class="num">✓</div><h2>Payment tracker</h2></div>
+    <p class="sub">Tick each month you have paid. Uses your loan and extra payment from the Calculator.</p>
     <div class="row">
-      <div><label>First payment (month)</label><select id="stM"></select></div>
+      <div><label>First payment month</label><select id="stM"></select></div>
       <div><label>Year</label><input id="stY" inputmode="numeric"></div>
     </div>
     <div class="prog"><i id="progBar"></i></div>
@@ -184,20 +186,20 @@ p.note{font-size:14px;line-height:1.5}
     <button class="btn alt" id="markUpTo">Mark all paid up to this month</button>
   </div>
   <div class="card" style="padding:8px 10px">
-    <table class="sched"><thead><tr><th>#</th><th>Principal</th><th>Interest</th><th>Balance</th><th>✓</th></tr></thead><tbody id="schedBody"></tbody></table>
+    <table class="sched"><thead><tr><th>Month</th><th>Principal</th><th>Interest</th><th>Balance</th><th>✓</th></tr></thead><tbody id="schedBody"></tbody></table>
   </div>
 </section>
 
 <!-- ============ ABOUT ============ -->
 <section class="page" id="p-about">
-  <div class="card hero">
-    <div class="lbl">Made by</div>
-    <div class="big" style="font-size:30px;margin-bottom:4px">Cer Idon</div>
+  <div class="card result">
+    <div style="font-size:13px;opacity:.8">Made by</div>
+    <div style="font-size:30px;font-weight:800;margin:2px 0 4px">Cer Idon</div>
     <div style="opacity:.8;font-size:14px">Real Estate · Bulacan</div>
     <div style="font-size:20px;font-weight:700;margin-top:12px;letter-spacing:.02em">0976 150 1542</div>
   </div>
   <div class="card">
-    <h2>Need help with computations or finding a home?</h2>
+    <h2 style="font-size:16px;margin-bottom:4px">Need help with your loan or finding a home?</h2>
     <div class="contact">
       <a class="btn" href="tel:09761501542">Call</a>
       <a class="btn alt" href="viber://chat?number=%2B639761501542">Viber</a>
@@ -206,17 +208,16 @@ p.note{font-size:14px;line-height:1.5}
     </div>
   </div>
   <div class="card">
-    <h2>Settings</h2>
+    <h2 style="font-size:16px">Settings</h2>
     <div class="seg" id="themeSeg" style="grid-template-columns:repeat(3,1fr)"><button data-v="auto" class="on">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div>
-    <button class="btn alt" id="resetBtn">Reset everything</button>
+    <button class="btn alt" id="resetBtn">Reset to the example</button>
   </div>
   <p class="disc">All figures are estimates only and not financial advice. Your data is saved only on this phone and is never sent anywhere.</p>
 </section>
 </main>
 
 <nav id="nav">
-  <button data-p="calc" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Compute</button>
-  <button data-p="extra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Principal</button>
+  <button data-p="calc" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Calculator</button>
   <button data-p="track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2 2 4-4"/></svg>Tracker</button>
   <button data-p="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Cer Idon</button>
 </nav>
@@ -226,20 +227,23 @@ p.note{font-size:14px;line-height:1.5}
 (function(){
 const $ = id => document.getElementById(id);
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const KEY = "ceridon-tracker-v1";
+const MONTHS_L = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const KEY = "ceridon-tracker-v2";
 const PRESET = {pagibig:{rate:6.25, term:30, max:30}, bank:{rate:7.5, term:20, max:25}};
+const now = new Date();
+const DEF = {lender:"pagibig", price:2500000, dp:10, rate:6.25, term:30, xAmt:20000, xFreq:"year", xMonth:11, xYear:"",
+             stM:0, stY:now.getFullYear(), paid:{}, theme:"auto"};
 const S = load();
 
 function load(){
-  const d = {lender:"pagibig", price:2500000, dp:10, rate:6.25, term:30, income:"", xMonthly:"", xYearly:"", xYearMonth:11, xOnce:"", xOnceAt:"", stM:new Date().getMonth(), stY:new Date().getFullYear(), paid:{}, theme:"auto"};
-  try{ return Object.assign(d, JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ return d; }
+  try{ return Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ return Object.assign({}, DEF); }
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
 const num = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g,"")); return isFinite(n) ? n : 0; };
 const peso = v => "₱" + Math.round(v).toLocaleString("en-PH");
+const comma = v => v ? Math.round(v).toLocaleString("en-PH") : "";
 const yrsMo = m => { const y = Math.floor(m/12), r = m%12; return (y? y+(y>1?" years":" year"):"") + (y&&r?" ":"") + (r? r+(r>1?" months":" month"):"") || "0"; };
-function fmtInput(el){ const n = num(el.value); el.value = n ? Math.round(n).toLocaleString("en-PH") : ""; }
 
 /* ---------- math ---------- */
 function payment(P, annual, months){
@@ -247,17 +251,19 @@ function payment(P, annual, months){
   if(!r) return P/months;
   return P*r/(1-Math.pow(1+r,-months));
 }
+// ex: {amt, freq, month, year}; k = payment number (1-based); calendar month of payment k = (stM + k - 1) % 12
 function schedule(P, annual, months, ex){
   const r = annual/100/12, M = payment(P, annual, months);
   let bal = P, rows = [], tInt = 0, tPay = 0;
   for(let k=1; k<=months && bal>0.005; k++){
     const int = bal*r;
-    let prin = Math.min(M - int, bal);
+    const prin = Math.min(M - int, bal);
     let extra = 0;
-    if(ex){
-      extra += ex.monthly;
-      if(ex.yearly && ((S.stM + k - 1) % 12) === ex.yearMonth) extra += ex.yearly;
-      if(ex.once && k === ex.onceAt) extra += ex.once;
+    if(ex && ex.amt>0){
+      const calM = (S.stM + k - 1) % 12;
+      if(ex.freq==="month") extra = ex.amt;
+      else if(ex.freq==="year" && calM===ex.month) extra = ex.amt;
+      else if(ex.freq==="once" && calM===ex.month && Math.floor((k-1)/12)+1===ex.year) extra = ex.amt;
       extra = Math.min(extra, bal - prin);
     }
     bal -= prin + extra; if(bal < 0.005) bal = 0;
@@ -267,77 +273,63 @@ function schedule(P, annual, months, ex){
   return {M, rows, tInt, tPay, months: rows.length};
 }
 
-/* ---------- state from UI ---------- */
-function inputs(){
-  const price = num($("price").value), dp = Math.min(num($("dp").value), 100);
-  const loan = price*(1-dp/100);
-  return {price, dp, loan, rate: num($("rate").value), months: (+$("term").value)*12};
-}
-function extras(){
-  return {monthly: num($("xMonthly").value), yearly: num($("xYearly").value), yearMonth: +$("xYearMonth").value,
-          once: num($("xOnce").value), onceAt: Math.max(1, Math.round(num($("xOnceAt").value)) || 1)};
-}
-const hasExtra = e => e.monthly>0 || e.yearly>0 || e.once>0;
-
 /* ---------- render ---------- */
 let last = null;
-function render(){
-  const I = inputs(), E = extras();
-  S.price = I.price; S.dp = num($("dp").value); S.rate = I.rate; S.term = +$("term").value;
-  S.income = $("income").value; S.xMonthly = $("xMonthly").value; S.xYearly = $("xYearly").value; S.xYearMonth = E.yearMonth;
-  S.xOnce = $("xOnce").value; S.xOnceAt = $("xOnceAt").value; S.stM = +$("stM").value; S.stY = num($("stY").value) || S.stY;
+function readUI(){
+  S.price = num($("price").value); S.dp = Math.min(num($("dp").value),100); S.rate = num($("rate").value); S.term = +$("term").value;
+  S.xAmt = num($("xAmt").value); S.xFreq = $("xFreq").value; S.xMonth = +$("xMonth").value; S.xYear = $("xYear").value;
+  S.stM = +$("stM").value; S.stY = num($("stY").value) || S.stY;
   save();
+}
+function render(){
+  readUI();
+  const loan = S.price*(1-S.dp/100), months = S.term*12;
+  const ex = {amt:S.xAmt, freq:S.xFreq, month:S.xMonth, year:Math.max(1, Math.round(num(S.xYear))||1)};
+  // show/hide "when" controls
+  $("xWhenRow").classList.toggle("hidden", S.xFreq==="month");
+  $("xYearBox").classList.toggle("hidden", S.xFreq!=="once");
+  $("xWhenLbl").textContent = S.xFreq==="once" ? "Month" : "Paid every";
 
-  if(I.loan <= 0 || I.months <= 0){ $("mo").textContent = "₱0"; return; }
-  const base = schedule(I.loan, I.rate, I.months, null);
-  const fast = hasExtra(E) ? schedule(I.loan, I.rate, I.months, E) : base;
-  last = {I, E, base, fast};
+  if(loan<=0 || months<=0 || S.rate<0){ $("mo").textContent="₱0"; $("split").textContent=""; return; }
+  const base = schedule(loan, S.rate, months, null);
+  const has = ex.amt>0;
+  const fast = has ? schedule(loan, S.rate, months, ex) : base;
+  last = {loan, months, ex, base, fast};
 
   $("mo").textContent = peso(base.M);
-  $("sLoan").textContent = peso(I.loan);
-  $("sInt").textContent = peso(base.tInt);
-  $("sTot").textContent = peso(base.tPay);
-  $("sAll").textContent = peso(base.tPay + I.price - I.loan);
-  const pPct = I.loan/base.tPay*100;
-  $("bP").style.width = pPct+"%"; $("bI").style.width = (100-pPct)+"%";
-  $("loanHint").textContent = `Loan: ${peso(I.loan)} · ${I.months} monthly payments`;
+  const i1 = base.rows[0].int, p1 = base.M - i1, per100 = Math.round(i1/base.M*100);
+  $("split").innerHTML = `Loan amount: <b>${peso(loan)}</b><br>In your 1st month, <b>${peso(i1)}</b> goes to interest and only <b>${peso(p1)}</b> to your debt. That is <b>₱${per100} of every ₱100</b>.`;
 
-  const inc = num($("income").value);
-  if(inc){
-    const pct = base.M/inc*100;
-    $("incomeHint").innerHTML = `The payment is <b>${pct.toFixed(0)}%</b> of income. ` + (pct<=35 ? "✅ Within the usual guideline." : "⚠️ A bit heavy. Try a longer term or a bigger downpayment.");
-  } else $("incomeHint").textContent = "Rule of thumb: keep the monthly payment under ~35% of income.";
-
-  // principal page
-  const saved = base.tInt - fast.tInt, fewer = base.months - fast.months;
-  $("xSaved").textContent = peso(Math.max(0,saved));
-  $("xFaster").textContent = hasExtra(E) ? (fewer>0 ? `You finish ${yrsMo(fewer)} earlier!` : "Small effect so far. Try a bigger amount.") : "Enter an extra payment above";
-  $("cT1").textContent = yrsMo(base.months); $("cT2").textContent = yrsMo(fast.months);
-  $("cI1").textContent = peso(base.tInt); $("cI2").textContent = peso(fast.tInt);
-  $("cP1").textContent = peso(base.tPay); $("cP2").textContent = peso(fast.tPay);
+  const fewer = base.months - fast.months, saved = base.tInt - fast.tInt;
+  $("resNone").classList.toggle("hidden", has);
+  $("resYes").classList.toggle("hidden", !has);
+  $("rFaster").textContent = fewer>0 ? yrsMo(fewer) : "less than a month";
+  $("rSaved").textContent = peso(Math.max(0,saved));
+  $("cT1").textContent = yrsMo(base.months); $("cT2").textContent = has ? yrsMo(fast.months) : "–";
+  $("cI1").textContent = peso(base.tInt);    $("cI2").textContent = has ? peso(fast.tInt) : "–";
+  $("cP1").textContent = peso(base.tPay);    $("cP2").textContent = has ? peso(fast.tPay) : "–";
 
   renderSchedule(fast);
 }
 
 function renderSchedule(sc){
-  const body = $("schedBody"); let html = "";
+  let html = "";
   sc.rows.forEach(r=>{
-    const m = (S.stM + r.k - 1), y = S.stY + Math.floor(m/12), mo = m % 12;
+    const m = S.stM + r.k - 1, y = S.stY + Math.floor(m/12), mo = m % 12;
     if(r.k===1 || mo===0) html += `<tr class="yr"><td colspan="5">${y}</td></tr>`;
     const p = S.paid[r.k];
-    html += `<tr class="${p?'paid':''}"><td>${MONTHS[mo]} <span style="color:var(--mut);font-size:11px">#${r.k}</span></td><td>${Math.round(r.prin).toLocaleString("en-PH")}${r.extra?'<span style="color:var(--grn)">*</span>':''}</td><td>${Math.round(r.int).toLocaleString("en-PH")}</td><td>${Math.round(r.bal).toLocaleString("en-PH")}</td><td><input type="checkbox" class="chk" data-k="${r.k}" ${p?'checked':''}></td></tr>`;
+    html += `<tr class="${p?'paid':''}"><td>${MONTHS[mo]} <span style="color:var(--mut);font-size:11px">#${r.k}</span></td><td>${comma(r.prin)}${r.extra?'<span style="color:var(--grn)">*</span>':''}</td><td>${comma(r.int)}</td><td>${comma(r.bal)||"0"}</td><td><input type="checkbox" class="chk" data-k="${r.k}" ${p?'checked':''}></td></tr>`;
   });
-  body.innerHTML = html || '<tr><td colspan="5" class="empty">Enter your loan details in Compute first.</td></tr>';
+  $("schedBody").innerHTML = html || '<tr><td colspan="5" class="empty">Enter your loan in the Calculator first.</td></tr>';
   updProgress(sc);
 }
 function updProgress(sc){
-  let n = 0, bal = sc.rows.length ? last.I.loan : 0;
-  sc.rows.forEach(r=>{ if(S.paid[r.k]){ n++; } });
-  let lastPaid = 0; sc.rows.forEach(r=>{ if(S.paid[r.k]) lastPaid = r.k; });
-  if(lastPaid) bal = sc.rows[lastPaid-1].bal;
+  let n = 0, lastPaid = 0;
+  sc.rows.forEach(r=>{ if(S.paid[r.k]){ n++; lastPaid = r.k; } });
+  const bal = lastPaid ? sc.rows[lastPaid-1].bal : last.loan;
   $("progBar").style.width = (sc.rows.length ? n/sc.rows.length*100 : 0) + "%";
   $("progTxt").textContent = `${n} / ${sc.rows.length} months paid`;
-  $("progBal").textContent = sc.rows.length ? "Balance: " + peso(bal) : "";
+  $("progBal").textContent = "Balance: " + peso(bal);
 }
 
 /* ---------- setup ---------- */
@@ -346,24 +338,28 @@ function fillTerms(){
   for(let y=1; y<=max; y++){ const o = document.createElement("option"); o.value = y; o.textContent = y + (y===1?" year":" years"); sel.appendChild(o); }
   sel.value = Math.min(S.term, max);
 }
-MONTHS.forEach((m,i)=>{ ["xYearMonth","stM"].forEach(id=>{ const o=document.createElement("option"); o.value=i; o.textContent = id==="xYearMonth" ? "every "+m : m; $(id).appendChild(o); }); });
-
+MONTHS_L.forEach((m,i)=>{
+  const a=document.createElement("option"); a.value=i; a.textContent=m; $("xMonth").appendChild(a);
+  const b=document.createElement("option"); b.value=i; b.textContent=m; $("stM").appendChild(b);
+});
 function setLender(v, applyPreset){
   S.lender = v;
   document.querySelectorAll("#lender button").forEach(b=>b.classList.toggle("on", b.dataset.v===v));
   if(applyPreset){ $("rate").value = PRESET[v].rate; S.term = PRESET[v].term; }
   fillTerms();
 }
-setLender(S.lender, false);
-$("price").value = S.price ? Math.round(S.price).toLocaleString("en-PH") : "";
-$("dp").value = S.dp; $("rate").value = S.rate; $("term").value = Math.min(S.term, PRESET[S.lender].max);
-$("income").value = S.income; $("xMonthly").value = S.xMonthly; $("xYearly").value = S.xYearly; $("xYearMonth").value = S.xYearMonth;
-$("xOnce").value = S.xOnce; $("xOnceAt").value = S.xOnceAt; $("stM").value = S.stM; $("stY").value = S.stY;
+function fillUI(){
+  setLender(S.lender, false);
+  $("price").value = comma(S.price); $("dp").value = S.dp; $("rate").value = S.rate; $("term").value = Math.min(S.term, PRESET[S.lender].max);
+  $("xAmt").value = comma(S.xAmt); $("xFreq").value = S.xFreq; $("xMonth").value = S.xMonth; $("xYear").value = S.xYear;
+  $("stM").value = S.stM; $("stY").value = S.stY;
+}
+fillUI();
 
 document.querySelectorAll("#lender button").forEach(b=>b.onclick=()=>{ setLender(b.dataset.v, true); render(); });
-["price","dp","rate","income","xMonthly","xYearly","xOnce","xOnceAt","stY"].forEach(id=>$(id).addEventListener("input", render));
-["price","income","xMonthly","xYearly","xOnce"].forEach(id=>$(id).addEventListener("blur", ()=>fmtInput($(id))));
-["term","xYearMonth","stM"].forEach(id=>$(id).addEventListener("change", render));
+["price","dp","rate","xAmt","xYear","stY"].forEach(id=>$(id).addEventListener("input", render));
+["price","xAmt"].forEach(id=>$(id).addEventListener("blur", ()=>{ $(id).value = comma(num($(id).value)); }));
+["term","xFreq","xMonth","stM"].forEach(id=>$(id).addEventListener("change", render));
 
 $("schedBody").addEventListener("change", e=>{
   const k = e.target.dataset && e.target.dataset.k; if(!k) return;
@@ -372,10 +368,12 @@ $("schedBody").addEventListener("change", e=>{
   save(); updProgress(last.fast);
 });
 $("markUpTo").onclick = ()=>{
-  const now = new Date(), diff = (now.getFullYear()-S.stY)*12 + now.getMonth() - S.stM + 1;
-  if(diff < 1){ toast("Payments haven't started yet."); return; }
-  S.paid = {}; for(let k=1; k<=Math.min(diff, last.fast.rows.length); k++) S.paid[k]=1;
-  save(); renderSchedule(last.fast); toast(`${Math.min(diff,last.fast.rows.length)} months marked paid`);
+  if(!last) return;
+  const diff = (now.getFullYear()-S.stY)*12 + now.getMonth() - S.stM + 1;
+  if(diff < 1){ toast("Your payments have not started yet."); return; }
+  const n = Math.min(diff, last.fast.rows.length);
+  S.paid = {}; for(let k=1; k<=n; k++) S.paid[k]=1;
+  save(); renderSchedule(last.fast); toast(`${n} months marked paid`);
 };
 
 /* nav */
@@ -390,7 +388,7 @@ function setTheme(t){ S.theme = t; if(t==="auto") document.documentElement.remov
   document.querySelectorAll("#themeSeg button").forEach(b=>b.classList.toggle("on", b.dataset.v===t)); save(); }
 document.querySelectorAll("#themeSeg button").forEach(b=>b.onclick=()=>setTheme(b.dataset.v));
 setTheme(S.theme);
-$("resetBtn").onclick = ()=>{ try{ localStorage.removeItem(KEY); }catch(e){} location.reload(); };
+$("resetBtn").onclick = ()=>{ const th = S.theme; Object.assign(S, DEF, {paid:{}, theme:th}); save(); fillUI(); render(); toast("Back to the example"); };
 
 /* share */
 function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("on"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("on"),2200); }
@@ -403,15 +401,17 @@ async function share(text){
   try{ await navigator.clipboard.writeText(text); toast("Copied! Paste it in a chat."); }
   catch(e){ toast("Can't share here. Take a screenshot instead."); }
 }
+const FREQ_TXT = ex => ex.freq==="month" ? "every month" : ex.freq==="year" ? "every "+MONTHS_L[ex.month] : "one time";
 $("shareBtn").onclick = ()=>{
   if(!last) return;
-  const {I, base, fast} = last;
-  const t = hasExtra(last.E)
-    ? `${peso(I.loan)} loan at ${I.rate}%:\nRegular: ${yrsMo(base.months)}, interest ${peso(base.tInt)}\nWith extra principal payments: ${yrsMo(fast.months)}, interest ${peso(fast.tInt)}\nSaved: ${peso(base.tInt-fast.tInt)} 🏠\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment CALCU to get it too.`
-    : `${peso(I.loan)} loan at ${I.rate}% for ${I.months/12} years = ${peso(base.M)} per month.\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment CALCU to get it too.`;
+  const {loan, months, ex, base, fast} = last;
+  const tail = "\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment CALCU to get the app.";
+  const t = ex.amt>0
+    ? `${peso(loan)} home loan, ${S.rate}%, ${months/12} years.\nExtra ${peso(ex.amt)} ${FREQ_TXT(ex)} applied to principal:\n✅ Finish ${yrsMo(base.months-fast.months)} earlier\n💰 Save ${peso(base.tInt-fast.tInt)} in interest` + tail
+    : `${peso(loan)} home loan, ${S.rate}%, ${months/12} years = ${peso(base.M)} per month.` + tail;
   share(t);
 };
-$("shareApp").onclick = ()=>share("Cer Idon has a free home loan calculator and tracker for Pag-IBIG and bank loans. Follow Cer Idon on Facebook and comment CALCU to get it. 🏠");
+$("shareApp").onclick = ()=>share("Cer Idon has a free home loan calculator and tracker for Pag-IBIG and bank loans. Follow Cer Idon on Facebook and comment CALCU to get the app. 🏠");
 
 /* web-only install banner (hidden inside the Android app) */
 if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())){
