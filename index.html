@@ -74,7 +74,9 @@ details.help p{margin-top:6px}
 .sched th:first-child,.sched td:first-child{text-align:left}
 .sched tr.paid td{color:var(--mut);background:var(--grn2)}
 .sched tr.yr td{font-weight:700;background:var(--inp);color:var(--txt)}
-.chk{width:22px;height:22px;accent-color:var(--grn);vertical-align:middle}
+input.chk{width:26px;height:26px;padding:0;border:2px solid var(--mut);border-radius:50%;background:var(--card);vertical-align:middle;cursor:pointer;display:inline-grid;place-items:center;transition:background .15s,border-color .15s}
+input.chk:checked{background:var(--grn);border-color:var(--grn)}
+input.chk:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:translateY(-1px) rotate(45deg)}
 .prog{height:14px;background:var(--inp);border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:10px 0 6px}
 .prog i{display:block;height:100%;background:var(--grn);width:0;transition:width .3s}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
