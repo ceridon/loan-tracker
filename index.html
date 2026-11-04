@@ -90,6 +90,12 @@ nav button.on{color:var(--grn)}
 .toast.on{opacity:1}
 .empty{color:var(--mut);font-size:14px;text-align:center;padding:20px 0}
 .hidden{display:none}
+.dpbox{display:flex;gap:8px;align-items:stretch}
+.dpbox .field.pre input{padding-left:28px}
+.mini{display:flex;border:1px solid var(--line);border-radius:11px;background:var(--inp);padding:3px;flex:none}
+.mini button{border:0;background:none;width:44px;border-radius:8px;font:700 15px inherit;color:var(--mut);cursor:pointer}
+.mini button.on{background:var(--grn);color:#fff}
+.hint{font-size:12px;color:var(--mut);margin-top:6px}
 </style>
 </head>
 <body>
@@ -115,12 +121,16 @@ nav button.on{color:var(--grn)}
     <div class="seg" id="lender"><button data-v="pagibig" class="on">Pag-IBIG</button><button data-v="bank">Bank</button></div>
     <label>House price</label>
     <div class="field pre"><span>₱</span><input id="price" inputmode="numeric"></div>
-    <div class="row">
-      <div><label>Downpayment</label><div class="field suf"><input id="dp" inputmode="decimal"><span class="r">%</span></div></div>
-      <div><label>Years to pay</label><select id="term"></select></div>
+    <label>Downpayment</label>
+    <div class="dpbox">
+      <div class="field" style="flex:1;min-width:0"><span id="dpPre" class="hidden">₱</span><input id="dp" inputmode="decimal"></div>
+      <div class="mini" id="dpMode"><button data-v="pct" class="on">%</button><button data-v="amt">₱</button></div>
     </div>
-    <label>Interest rate per year</label>
-    <div class="field suf"><input id="rate" inputmode="decimal"><span class="r">%</span></div>
+    <div class="hint" id="dpEq"></div>
+    <div class="row">
+      <div><label>Years to pay</label><select id="term"></select></div>
+      <div><label>Interest / year</label><div class="field suf"><input id="rate" inputmode="decimal"><span class="r">%</span></div></div>
+    </div>
 
     <div class="monthly"><small>Your monthly</small><b id="mo">₱0</b></div>
     <div class="split" id="split"></div>
@@ -233,7 +243,7 @@ const MONTHS_L = ["January","February","March","April","May","June","July","Augu
 const KEY = "ceridon-tracker-v2";
 const PRESET = {pagibig:{rate:6.25, term:30, max:30}, bank:{rate:7.5, term:20, max:25}};
 const now = new Date();
-const DEF = {lender:"pagibig", price:2500000, dp:10, rate:6.25, term:30, xAmt:20000, xFreq:"year", xMonth:11, xYear:"",
+const DEF = {lender:"pagibig", price:2500000, dp:10, dpMode:"pct", dpAmt:250000, rate:6.25, term:30, xAmt:20000, xFreq:"year", xMonth:11, xYear:"",
              stM:0, stY:now.getFullYear(), paid:{}, theme:"auto"};
 const S = load();
 
@@ -278,14 +288,18 @@ function schedule(P, annual, months, ex){
 /* ---------- render ---------- */
 let last = null;
 function readUI(){
-  S.price = num($("price").value); S.dp = Math.min(num($("dp").value),100); S.rate = num($("rate").value); S.term = +$("term").value;
+  S.price = num($("price").value);
+  if(S.dpMode==="pct") S.dp = Math.min(num($("dp").value),100); else S.dpAmt = num($("dp").value);
+  S.rate = num($("rate").value); S.term = +$("term").value;
   S.xAmt = num($("xAmt").value); S.xFreq = $("xFreq").value; S.xMonth = +$("xMonth").value; S.xYear = $("xYear").value;
   S.stM = +$("stM").value; S.stY = num($("stY").value) || S.stY;
   save();
 }
 function render(){
   readUI();
-  const loan = S.price*(1-S.dp/100), months = S.term*12;
+  const dpVal = S.dpMode==="pct" ? S.price*S.dp/100 : Math.min(S.dpAmt, S.price);
+  const loan = S.price - dpVal, months = S.term*12;
+  $("dpEq").textContent = S.price>0 ? (S.dpMode==="pct" ? `= ${peso(dpVal)}` : `= ${(dpVal/S.price*100).toFixed(1).replace(/\.0$/,"")}% of the price`) : "";
   const ex = {amt:S.xAmt, freq:S.xFreq, month:S.xMonth, year:Math.max(1, Math.round(num(S.xYear))||1)};
   // show/hide "when" controls
   $("xWhenRow").classList.toggle("hidden", S.xFreq==="month");
@@ -350,9 +364,25 @@ function setLender(v, applyPreset){
   if(applyPreset){ $("rate").value = PRESET[v].rate; S.term = PRESET[v].term; }
   fillTerms();
 }
+function setDpMode(m){
+  S.dpMode = m;
+  document.querySelectorAll("#dpMode button").forEach(b=>b.classList.toggle("on", b.dataset.v===m));
+  const box = $("dp").parentElement;
+  box.classList.toggle("pre", m==="amt"); box.classList.toggle("suf", false);
+  $("dpPre").classList.toggle("hidden", m!=="amt");
+  $("dp").inputMode = m==="amt" ? "numeric" : "decimal";
+  $("dp").value = m==="pct" ? S.dp : comma(S.dpAmt);
+}
+document.querySelectorAll("#dpMode button").forEach(b=>b.onclick=()=>{
+  if(b.dataset.v===S.dpMode) return;
+  const price = num($("price").value);
+  if(b.dataset.v==="amt") S.dpAmt = Math.round(price*S.dp/100);
+  else S.dp = price>0 ? Math.round(Math.min(S.dpAmt,price)/price*10000)/100 : S.dp;
+  setDpMode(b.dataset.v); render();
+});
 function fillUI(){
   setLender(S.lender, false);
-  $("price").value = comma(S.price); $("dp").value = S.dp; $("rate").value = S.rate; $("term").value = Math.min(S.term, PRESET[S.lender].max);
+  $("price").value = comma(S.price); setDpMode(S.dpMode); $("rate").value = S.rate; $("term").value = Math.min(S.term, PRESET[S.lender].max);
   $("xAmt").value = comma(S.xAmt); $("xFreq").value = S.xFreq; $("xMonth").value = S.xMonth; $("xYear").value = S.xYear;
   $("stM").value = S.stM; $("stY").value = S.stY;
 }
@@ -361,6 +391,7 @@ fillUI();
 document.querySelectorAll("#lender button").forEach(b=>b.onclick=()=>{ setLender(b.dataset.v, true); render(); });
 ["price","dp","rate","xAmt","xYear","stY"].forEach(id=>$(id).addEventListener("input", render));
 ["price","xAmt"].forEach(id=>$(id).addEventListener("blur", ()=>{ $(id).value = comma(num($(id).value)); }));
+$("dp").addEventListener("blur", ()=>{ if(S.dpMode==="amt") $("dp").value = comma(num($("dp").value)); });
 ["term","xFreq","xMonth","stM"].forEach(id=>$(id).addEventListener("change", render));
 
 $("schedBody").addEventListener("change", e=>{
