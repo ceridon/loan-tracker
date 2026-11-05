@@ -79,7 +79,7 @@ input.chk:checked{background:var(--grn);border-color:var(--grn)}
 input.chk:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:translateY(-1px) rotate(45deg)}
 .prog{height:14px;background:var(--inp);border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:10px 0 6px}
 .prog i{display:block;height:100%;background:var(--grn);width:0;transition:width .3s}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
 nav button{border:0;background:none;padding:9px 2px 10px;font:600 12px inherit;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
 nav button svg{width:23px;height:23px}
 nav button.on{color:var(--grn)}
@@ -96,18 +96,13 @@ nav button.on{color:var(--grn)}
 .mini button{border:0;background:none;width:44px;border-radius:8px;font:700 15px inherit;color:var(--mut);cursor:pointer}
 .mini button.on{background:var(--grn);color:#fff}
 .hint{font-size:12px;color:var(--mut);margin-top:6px}
-.big{font-size:34px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px}
-.lines{margin-top:12px;font-size:14px;line-height:1.5}
-.lines div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.12);font-variant-numeric:tabular-nums}
-.lines div span{opacity:.75}
-.warn{background:rgba(246,195,68,.18);color:inherit;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.45;margin-top:12px}
 </style>
 </head>
 <body>
 <header>
   <div class="brand">
     <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
-    <div><h1>Cer Idon Loan Tracker</h1><small>BUDGET · CALCULATOR · TRACKER</small></div>
+    <div><h1>Cer Idon Loan Tracker</h1><small>HOME LOAN CALCULATOR · PAG-IBIG &amp; BANK</small></div>
   </div>
 </header>
 
@@ -189,46 +184,6 @@ nav button.on{color:var(--grn)}
   <p class="disc">Estimates only. Actual rates, fees, insurance and approval depend on Pag-IBIG or your bank. Rates may change.</p>
 </section>
 
-<!-- ============ BUDGET ============ -->
-<section class="page" id="p-budget">
-  <div class="card">
-    <div class="step"><div class="num">1</div><h2>Your income</h2></div>
-    <p class="sub">Gross monthly income = your salary before deductions.</p>
-    <div class="seg" id="bLender"><button data-v="pagibig" class="on">Pag-IBIG</button><button data-v="bank">Bank</button></div>
-    <label>Your gross monthly income</label>
-    <div class="field pre"><span>₱</span><input id="bInc" inputmode="numeric"></div>
-    <label>Co-borrower's income (spouse, partner, family) · optional</label>
-    <div class="field pre"><span>₱</span><input id="bInc2" inputmode="numeric" placeholder="0"></div>
-    <div class="row">
-      <div><label>Your age</label><input id="bAge" inputmode="numeric"></div>
-      <div><label>Interest / year</label><div class="field suf"><input id="bRate" inputmode="decimal"><span class="r">%</span></div></div>
-    </div>
-    <label>Savings for downpayment</label>
-    <div class="field pre"><span>₱</span><input id="bSav" inputmode="numeric" placeholder="0"></div>
-    <details class="help">
-      <summary>? How this is computed</summary>
-      <p>Pag-IBIG checks your <b>capacity to pay</b>: your monthly should not go over <b>35% of your gross monthly income</b>. Most banks use a similar limit.</p>
-      <p>Years to pay: up to <b>30 years</b> for Pag-IBIG (20 to 25 for most banks), and the loan should be fully paid by <b>age 70</b>.</p>
-    </details>
-  </div>
-
-  <div class="card result">
-    <div class="step"><div class="num">2</div><h2>The house you can afford</h2></div>
-    <div style="margin-top:10px;font-size:13px;opacity:.75">House price up to about</div>
-    <div class="big" id="bPrice">–</div>
-    <div class="lines">
-      <div><span>Max monthly (35%)</span><b id="bMo">–</b></div>
-      <div><span>Max loan</span><b id="bLoan">–</b></div>
-      <div><span>Plus your downpayment</span><b id="bDp">–</b></div>
-      <div><span>Years to pay</span><b id="bYrs">–</b></div>
-    </div>
-    <div class="warn hidden" id="bWarn"></div>
-    <button class="btn yel" id="bUse">Use this in the Calculator</button>
-    <button class="btn alt" id="bShare" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3)">Share my result</button>
-  </div>
-  <p class="disc">Estimates only. Approval also depends on your documents, credit history, other debts and the property's appraised value. Rules and rates may change; confirm with Pag-IBIG or your bank.</p>
-</section>
-
 <!-- ============ TRACKER ============ -->
 <section class="page" id="p-track">
   <div class="card">
@@ -275,7 +230,6 @@ nav button.on{color:var(--grn)}
 
 <nav id="nav">
   <button data-p="calc" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Calculator</button>
-  <button data-p="budget"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M14 12.6c-.3-.4-1-.7-2-.7-1.1 0-2 .5-2 1.2s.9 1 2 1.2 2 .5 2 1.2-.9 1.2-2 1.2c-1 0-1.7-.3-2-.7M12 11v1M12 16.1v1"/></svg>Budget</button>
   <button data-p="track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2 2 4-4"/></svg>Tracker</button>
   <button data-p="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Cer Idon</button>
 </nav>
@@ -290,8 +244,7 @@ const KEY = "ceridon-tracker-v3";
 const PRESET = {pagibig:{rate:6.25, term:30, max:30}, bank:{rate:7.5, term:20, max:25}};
 const now = new Date();
 const DEF = {lender:"pagibig", price:3000000, dp:10, dpMode:"pct", dpAmt:300000, rate:6.25, term:30, xAmt:30000, xFreq:"year", xMonth:11, xYear:"",
-             stM:0, stY:now.getFullYear(), paid:{}, theme:"auto",
-             bLender:"pagibig", bInc:35000, bInc2:0, bAge:30, bRate:6.25, bSav:250000};
+             stM:0, stY:now.getFullYear(), paid:{}, theme:"auto"};
 const S = load();
 
 function load(){
@@ -456,79 +409,19 @@ $("markUpTo").onclick = ()=>{
   save(); renderSchedule(last.fast); toast(`${n} months marked paid`);
 };
 
-
-/* ---------- budget (what can I afford) ---------- */
-const CAP = 0.35, PAGIBIG_MAX_LOAN = 6000000;
-let lastB = null;
-const round10k = v => Math.floor(v/10000)*10000;
-function bYears(){
-  const max = PRESET[S.bLender].max, age = Math.round(num(S.bAge)) || 30;
-  return Math.max(0, Math.min(max, 70 - age));
-}
-function renderBudget(){
-  S.bInc = num($("bInc").value); S.bInc2 = num($("bInc2").value); S.bAge = num($("bAge").value);
-  S.bRate = num($("bRate").value); S.bSav = num($("bSav").value); save();
-  const inc = S.bInc + S.bInc2, yrs = bYears(), n = yrs*12, r = S.bRate/100/12;
-  let mo = inc*CAP;
-  let loan = n>0 ? (r ? mo*(1-Math.pow(1+r,-n))/r : mo*n) : 0;
-  let capped = false;
-  if(S.bLender==="pagibig" && loan > PAGIBIG_MAX_LOAN){ loan = PAGIBIG_MAX_LOAN; capped = true; mo = payment(loan, S.bRate, n); }
-  const price = round10k(loan + S.bSav);
-  lastB = {inc, yrs, mo, loan, price};
-  const ok = inc>0 && yrs>0;
-  $("bMo").textContent = ok ? peso(mo) : "–";
-  $("bLoan").textContent = ok ? peso(loan) + (capped ? " (max)" : "") : "–";
-  $("bDp").textContent = peso(S.bSav);
-  $("bYrs").textContent = yrs ? yrs + " years" : "–";
-  $("bPrice").textContent = ok ? peso(price) : "–";
-  let w = "";
-  if(yrs<=0) w = "The loan should be fully paid by age 70, so a home loan may not be possible at this age. Ask Pag-IBIG or your bank.";
-  else if(inc<=0) w = "Put your monthly income above.";
-  else if(S.bSav < price*0.10) w = `Many sellers ask for a 10 to 20% downpayment. For this price, 10% is about <b>${peso(price*0.10)}</b>. Keep saving, or ask about low-downpayment promos.`;
-  if(ok && capped) w = (w ? w + "<br><br>" : "") + "Pag-IBIG's maximum loan is ₱6,000,000, so your loan stops there.";
-  $("bWarn").innerHTML = w; $("bWarn").classList.toggle("hidden", !w);
-}
-function setBLender(v, applyPreset){
-  S.bLender = v;
-  document.querySelectorAll("#bLender button").forEach(b=>b.classList.toggle("on", b.dataset.v===v));
-  if(applyPreset) $("bRate").value = PRESET[v].rate;
-}
-function fillBudget(){
-  setBLender(S.bLender, false);
-  $("bInc").value = comma(S.bInc); $("bInc2").value = comma(S.bInc2); $("bAge").value = S.bAge || "";
-  $("bRate").value = S.bRate; $("bSav").value = comma(S.bSav);
-}
-fillBudget();
-document.querySelectorAll("#bLender button").forEach(b=>b.onclick=()=>{ setBLender(b.dataset.v, true); renderBudget(); });
-["bInc","bInc2","bAge","bRate","bSav"].forEach(id=>$(id).addEventListener("input", renderBudget));
-["bInc","bInc2","bSav"].forEach(id=>$(id).addEventListener("blur", ()=>{ $(id).value = comma(num($(id).value)); }));
-$("bUse").onclick = ()=>{
-  if(!lastB || lastB.price<=0 || lastB.yrs<=0 || lastB.inc<=0) return;
-  S.lender = S.bLender; S.rate = S.bRate; S.term = lastB.yrs;
-  S.price = lastB.price; S.dpMode = "amt"; S.dpAmt = Math.min(S.bSav, S.price);
-  fillUI(); render(); go("calc"); toast("Loaded in the Calculator");
-};
-$("bShare").onclick = ()=>{
-  if(!lastB || lastB.price<=0 || lastB.inc<=0) return;
-  share(`With ${peso(lastB.inc)} monthly income, I can afford a house of about ${peso(lastB.price)} (${S.bLender==="pagibig"?"Pag-IBIG":"bank"} loan, ${lastB.yrs} years, ${peso(lastB.mo)}/month).\n\nComputed with the free Cer Idon Loan Tracker. Follow Cer Idon and comment BUDGET to get the app.`);
-};
-
-/* nav (+ deep links: #budget, #calc, #track, #about) */
-function go(p){
-  if(!$("p-"+p)) p = "calc";
-  document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on", x.dataset.p===p));
-  document.querySelectorAll(".page").forEach(x=>x.classList.toggle("on", x.id==="p-"+p));
+/* nav */
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on", x===b));
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on", p.id==="p-"+b.dataset.p));
   window.scrollTo(0,0);
-}
-document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>go(b.dataset.p));
-window.addEventListener("hashchange", ()=>go(location.hash.slice(1)));
+});
 
 /* theme */
 function setTheme(t){ S.theme = t; if(t==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
   document.querySelectorAll("#themeSeg button").forEach(b=>b.classList.toggle("on", b.dataset.v===t)); save(); }
 document.querySelectorAll("#themeSeg button").forEach(b=>b.onclick=()=>setTheme(b.dataset.v));
 setTheme(S.theme);
-$("resetBtn").onclick = ()=>{ const th = S.theme; Object.assign(S, DEF, {paid:{}, theme:th}); save(); fillUI(); fillBudget(); render(); renderBudget(); toast("Back to the example"); };
+$("resetBtn").onclick = ()=>{ const th = S.theme; Object.assign(S, DEF, {paid:{}, theme:th}); save(); fillUI(); render(); toast("Back to the example"); };
 
 /* share */
 function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("on"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("on"),2200); }
@@ -551,7 +444,7 @@ $("shareBtn").onclick = ()=>{
     : `${peso(loan)} home loan, ${S.rate}%, ${months/12} years = ${peso(base.M)} per month.` + tail;
   share(t);
 };
-$("shareApp").onclick = ()=>share("Cer Idon has a free app: find out how much house you can afford, compute your home loan and track your payments (Pag-IBIG and bank). Follow Cer Idon on Facebook and comment CALCU to get the app. 🏠");
+$("shareApp").onclick = ()=>share("Cer Idon has a free home loan calculator and tracker for Pag-IBIG and bank loans. Follow Cer Idon on Facebook and comment CALCU to get the app. 🏠");
 
 /* web-only install banner (hidden inside the Android app) */
 if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())){
@@ -566,8 +459,6 @@ if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.i
 }
 
 render();
-renderBudget();
-if(location.hash) go(location.hash.slice(1));
 })();
 </script>
 </body>
